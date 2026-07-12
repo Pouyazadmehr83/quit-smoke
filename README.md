@@ -1,100 +1,145 @@
-# ترک‌یار (QuitSmoke) — نمونه‌ی اولیه (MVP)
+# QuitSmoke (Quit-Yar) — Minimum Viable Product (MVP)
 
-پلتفرمی برای کمک به ترک سیگار با تمرکز بر **انگیزه‌ی مالی**: هر روز پاکی،
-پولی که در سیگار کشیدن خرج می‌شد را به‌عنوان «پس‌انداز» نشان می‌دهد، استریک
-(روزهای پاکی متوالی) را پیگیری می‌کند، و امکان هدف‌گذاری مالی (مثلاً خرید موتور)
-را فراهم می‌کند.
+A platform that helps people quit smoking by focusing on **financial motivation**. Every smoke-free day, the app calculates how much money the user has saved instead of spending on cigarettes, tracks their **streak**, and allows them to set financial goals (such as buying a motorcycle) to stay motivated.
 
-## فهرست مستندات
+---
 
-| سند | توضیح |
-|---|---|
-| همین فایل | راه‌اندازی سریع پروژه با Docker |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | معماری کامل، مدل دیتابیس، تصمیمات طراحی، فاز بعدی |
-| [docs/API.md](docs/API.md) | مستند کامل تمام endpoint های API |
+# Documentation
 
-## پیش‌نیاز
+| Document               | Description                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------------- |
+| This README            | Quick project setup using Docker                                                    |
+| `docs/ARCHITECTURE.md` | Complete system architecture, database design, design decisions, and future roadmap |
+| `docs/API.md`          | Complete API documentation for all endpoints                                        |
 
-- Docker و Docker Compose نصب باشد.
+---
 
-## راه‌اندازی سریع
+# Prerequisites
+
+* Docker
+* Docker Compose
+
+---
+
+# Quick Start
 
 ```bash
-# ۱. کلون یا کپی پروژه، سپس وارد پوشه‌ی اصلی شوید
+# 1. Clone the repository and enter the project directory
 cd quitsmoke
 
-# ۲. فایل .env را از روی نمونه بسازید (مقادیر پیش‌فرض برای توسعه‌ی لوکال کافی است)
+# 2. Create the environment file
 cp .env.example .env
 
-# ۳. کانتینرها را بالا بیاورید (دیتابیس postgres + بک‌اند جنگو + فرانت‌اند react)
+# 3. Build and start all services
 docker compose up --build
 ```
 
-بعد از بالا آمدن:
+After the containers are running:
 
-- **بک‌اند API**: http://localhost:8000/api/
-- **مستند Swagger خودکار**: http://localhost:8000/api/docs/
-- **پنل ادمین جنگو**: http://localhost:8000/admin/
-- **فرانت‌اند (React)**: http://localhost:3000/
+* **Backend API:** http://localhost:8000/api/
+* **Swagger API Documentation:** http://localhost:8000/api/docs/
+* **Django Admin:** http://localhost:8000/admin/
+* **Frontend (React):** http://localhost:3000/
 
-### ساخت کاربر ادمین (اختیاری، برای دسترسی به پنل ادمین)
+---
+
+# Create an Admin User (Optional)
 
 ```bash
 docker compose exec backend python manage.py createsuperuser
 ```
 
-### اجرای تست‌های واحد بک‌اند
+---
+
+# Run Backend Tests
 
 ```bash
 docker compose exec backend python manage.py test
 ```
 
-تست‌های موجود، صحت محاسبه‌ی استریک (روزهای پاکی متوالی)، محاسبه‌ی پول
-پس‌انداز شده، و رفتار صحیح هنگام لغزش (سیگار کشیدن بعد از مدتی پاکی) را
-پوشش می‌دهند — این منطق قلب پروژه است و باید همیشه سبز (passing) بماند.
+The existing tests cover the core business logic of the application, including:
 
-## ساختار پروژه
+* Smoke-free streak calculation
+* Money saved calculation
+* Correct behavior after a relapse
+
+These tests represent the heart of the project and should always remain passing.
+
+---
+
+# Project Structure
 
 ```
 quitsmoke/
 ├── docker-compose.yml
 ├── .env.example
-├── backend/                  # Django + DRF
-│   ├── config/                # تنظیمات اصلی پروژه (settings, urls)
+├── backend/                  # Django + Django REST Framework
+│   ├── config/               # Project configuration
 │   ├── apps/
-│   │   ├── users/              # کاربر سفارشی (ایمیل) + پروفایل سیگار
-│   │   ├── tracking/            # چک‌این روزانه + محاسبه‌ی استریک و پس‌انداز
-│   │   ├── goals/               # هدف‌گذاری مالی
-│   │   ├── leaderboard/         # دو لیست برترها (استریک / پس‌انداز)
-│   │   └── core/                # رزرو برای فاز بعد (نرخ ارز، کالاها)
+│   │   ├── users/            # Custom email-based authentication & smoking profile
+│   │   ├── tracking/         # Daily check-ins, streak & savings calculation
+│   │   ├── goals/            # Financial goals
+│   │   ├── leaderboard/      # Streak & savings leaderboards
+│   │   └── core/             # Reserved for future features
 │   └── requirements.txt
-├── frontend/                 # React + Vite (نمونه‌ی اولیه‌ی رابط کاربری)
+├── frontend/                 # React + Vite
 │   └── src/
-│       ├── api/                # توابع ارتباط با بک‌اند (axios)
-│       ├── pages/               # صفحات (ورود، داشبورد، هدف، لیدربورد...)
-│       ├── components/          # کامپوننت‌های مشترک (مثل حلقه‌ی نفس)
-│       └── context/             # مدیریت وضعیت احراز هویت
+│       ├── api/              # Axios API client
+│       ├── pages/            # Application pages
+│       ├── components/       # Shared UI components
+│       └── context/          # Authentication context
 └── docs/
     ├── ARCHITECTURE.md
     └── API.md
 ```
 
-## وضعیت فعلی (MVP) — چه چیزی کار می‌کند
+---
 
-- ✅ ثبت‌نام و ورود با ایمیل/رمز عبور (JWT)
-- ✅ ثبت پروفایل سیگار (برند، قیمت پاکت، تعداد روزانه)
-- ✅ چک‌این روزانه («امروز سیگار کشیدی؟») با محاسبه‌ی خودکار استریک و پس‌انداز
-- ✅ هدف‌گذاری مالی با تخمین «چند روز دیگر به هدفت می‌رسی»
-- ✅ دو لیست برترها: بیشترین روز پاکی و بیشترین پس‌انداز
-- ✅ تم رنگی فیروزه‌ای/سفید آرام طبق درخواست
-- ✅ مستندات API خودکار (Swagger)
+# Current MVP Features
 
-## چیزهایی که عمداً به فاز بعد موکول شده‌اند
+* ✅ User registration and login (Email + JWT Authentication)
+* ✅ Smoking profile setup (brand, cigarette pack price, cigarettes per day)
+* ✅ Daily check-in with automatic streak and savings calculation
+* ✅ Financial goal tracking with estimated completion date
+* ✅ Leaderboards for longest streak and highest savings
+* ✅ Clean turquoise & white user interface
+* ✅ Auto-generated Swagger API documentation
 
-طبق تصمیم گرفته‌شده در طول طراحی، موارد زیر **در این نسخه نیستند** اما
-معماری برای افزودن بدون ریفکتور بزرگ آماده است (جزئیات کامل در
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)):
+---
 
-- 📋 ارسال ایمیل یادآوری روزانه (Celery + SMTP)
-- 📋 سیستم «با این پول چی می‌تونی بخری؟» با نرخ ارز لحظه‌ای و تورم بازار ایران
-# quit-smoke
+# Planned for Future Versions
+
+The following features were intentionally postponed to keep the MVP focused. The project architecture is already prepared to support them without major refactoring (see `docs/ARCHITECTURE.md`).
+
+* 📋 Daily reminder emails (Celery + SMTP)
+* 📋 "What can you buy with your savings?" feature using real-time exchange rates and Iranian market prices
+
+---
+
+# Tech Stack
+
+### Backend
+
+* Django
+* Django REST Framework
+* PostgreSQL
+* JWT Authentication
+* drf-spectacular (Swagger/OpenAPI)
+
+### Frontend
+
+* React
+* Vite
+* Axios
+* React Router
+
+### DevOps
+
+* Docker
+* Docker Compose
+
+---
+
+# Project Goal
+
+QuitSmoke aims to transform the money normally spent on cigarettes into a visible source of motivation. Instead of simply counting smoke-free days, the platform helps users visualize their financial progress, build healthy habits, and stay committed to quitting through measurable achievements.
