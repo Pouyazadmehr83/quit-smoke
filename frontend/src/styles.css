@@ -1,0 +1,399 @@
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.3/Vazirmatn-font-face.css');
+
+:root {
+  /* --- پالت رنگی: فیروزه‌ای آرام + سفید + لمسی از طلایی برای دستاورد --- */
+  --color-bg: #FAFDFD;
+  --color-surface: #FFFFFF;
+  --color-primary: #0E7C7B;       /* فیروزه‌ای عمیق - دکمه‌ها، تاکیدها */
+  --color-primary-deep: #0B4F4D;  /* آبی نفتی - متن هدر، تیتر */
+  --color-primary-soft: #E3F4F3;  /* فیروزه‌ای بسیار روشن - پس‌زمینه کارت‌ها */
+  --color-accent-gold: #D4A24C;   /* طلایی ملایم - فقط برای لحظه‌ی دستاورد مالی */
+  --color-text: #1C2E2D;
+  --color-text-muted: #6B8482;
+  --color-danger: #C75D4D;
+  --color-border: #DCEEED;
+
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  --font-display: 'Vazirmatn', Tahoma, sans-serif;
+  --font-body: 'Vazirmatn', Tahoma, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  direction: rtl;
+}
+
+.app-shell {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  flex: 1;
+  padding: 24px 20px 100px;
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--color-primary-deep);
+  letter-spacing: -0.3px;
+}
+
+/* --- کارت اصلی پول پس‌انداز --- */
+.savings-card {
+  background: linear-gradient(160deg, var(--color-primary-deep), var(--color-primary));
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.savings-label {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.savings-amount {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 4px 0;
+}
+
+.savings-amount small {
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-right: 4px;
+}
+
+/* --- حلقه‌ی نفَس (signature element) --- */
+.breath-ring-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.breath-ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.breath-ring-bg {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 10;
+}
+
+.breath-ring-progress {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.breath-ring-center {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.breath-ring-days {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--color-primary-deep);
+  line-height: 1;
+}
+
+.breath-ring-sub {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+/* --- کارت‌های عمومی --- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary-deep);
+  margin-bottom: 12px;
+}
+
+/* --- سوال روزانه --- */
+.checkin-question {
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.checkin-question h2 {
+  font-size: 19px;
+  color: var(--color-primary-deep);
+  margin-bottom: 22px;
+}
+
+.checkin-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 16px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-success {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-danger {
+  background: #FBEEEC;
+  color: var(--color-danger);
+}
+
+.btn-primary-outline {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- هدف مالی --- */
+.goal-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: var(--color-primary-soft);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.goal-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-gold));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.goal-title {
+  font-weight: 700;
+  color: var(--color-primary-deep);
+}
+
+.goal-eta {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 6px;
+}
+
+/* --- لیدربورد --- */
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.leaderboard-row:last-child { border-bottom: none; }
+
+.leaderboard-rank {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+}
+
+.leaderboard-row.is-me {
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+}
+
+.leaderboard-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.leaderboard-value {
+  font-weight: 700;
+  color: var(--color-primary-deep);
+  font-size: 14px;
+}
+
+/* --- تب‌بار پایین --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0 16px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.nav-item.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* --- فرم‌ها --- */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.error-text {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.center-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.auth-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-primary-deep);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+}
